@@ -28,7 +28,7 @@ async def download_as_mp3(message: types.Message):
     yt.download()
     await bot.send_audio(chat_id=message.chat.id, audio=open(yt.default_filename, 'rb'))
     os.remove(yt.default_filename)
-
+    del my_dict[message.chat.id]
 
 @dp.message_handler(lambda message: message.text == "Download as mp4")
 async def download_as_mp4(message: types.Message):
@@ -37,6 +37,8 @@ async def download_as_mp4(message: types.Message):
     yt.download()
     await bot.send_video(chat_id=message.chat.id, video=open(yt.default_filename, 'rb'))
     os.remove(yt.default_filename)
+    del my_dict[message.chat.id]
+
 
 
 @dp.message_handler()
