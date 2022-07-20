@@ -1,0 +1,11 @@
+version: '3.3'
+
+services:
+  marathon_bet:
+    restart: always
+    command: python3 telegramBot.py
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - 11245:11245
