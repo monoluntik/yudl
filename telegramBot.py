@@ -13,7 +13,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 def try_site(url):
-    request = requests.get(url, allow_redirects=False)
+    request = requests.get(url)
     return request.status_code == 200
 
 
