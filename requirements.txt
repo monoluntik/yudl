@@ -1,3 +1,4 @@
 aiogram
 pytube
 requests
+validators

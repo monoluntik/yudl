@@ -2,6 +2,7 @@ import logging
 from aiogram import Bot, Dispatcher, executor, types
 import requests
 import os
+import validators
 import pytube
 API_TOKEN = '5318243693:AAHkRa0p3DL03U-bNrCTDPuykPNWJK5SN4Y'
 
@@ -40,7 +41,9 @@ async def download_as_mp4(message: types.Message):
 
 @dp.message_handler()
 async def send_buttons(message: types.Message):
-    if try_site(message.text):
+    if not validators.url(message.text):
+        await message.answer('Please send youtube url')
+    elif try_site(message.text):
         my_dict[message.chat.id] = message.text
         keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True)
         button_1 = types.KeyboardButton(text="Download as mp3")
