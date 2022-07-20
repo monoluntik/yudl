@@ -23,21 +23,27 @@ async def send_welcome(message: types.Message):
 
 @dp.message_handler(lambda message: message.text == "Download as mp3")
 async def download_as_mp3(message: types.Message):
-    await message.answer('Start downloading, pleas wait')
-    yt = pytube.YouTube(my_dict[message.chat.id]).streams.filter(only_audio=True).first()
-    yt.download()
-    await bot.send_audio(chat_id=message.chat.id, audio=open(yt.default_filename, 'rb'))
-    os.remove(yt.default_filename)
-    del my_dict[message.chat.id]
+    if not message.chat.id in my_dict:
+        await message.answer("Please send youtube url")
+    else:
+        await message.answer('Start downloading, pleas wait')
+        yt = pytube.YouTube(my_dict[message.chat.id]).streams.filter(only_audio=True).first()
+        yt.download()
+        await bot.send_audio(chat_id=message.chat.id, audio=open(yt.default_filename, 'rb'))
+        os.remove(yt.default_filename)
+        del my_dict[message.chat.id]
 
 @dp.message_handler(lambda message: message.text == "Download as mp4")
 async def download_as_mp4(message: types.Message):
-    await message.answer('Start downloading, pleas wait')
-    yt = pytube.YouTube(my_dict[message.chat.id]).streams.filter(file_extension="mp4").first()
-    yt.download()
-    await bot.send_video(chat_id=message.chat.id, video=open(yt.default_filename, 'rb'))
-    os.remove(yt.default_filename)
-    del my_dict[message.chat.id]
+    if not message.chat.id in my_dict:
+        await message.answer("Please send youtube url")
+    else:
+        await message.answer('Start downloading, pleas wait')
+        yt = pytube.YouTube(my_dict[message.chat.id]).streams.filter(file_extension="mp4").first()
+        yt.download()
+        await bot.send_video(chat_id=message.chat.id, video=open(yt.default_filename, 'rb'))
+        os.remove(yt.default_filename)
+        del my_dict[message.chat.id]
 
 
 
